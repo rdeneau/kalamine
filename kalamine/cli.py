@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 from contextlib import contextmanager
 from importlib import metadata
 from pathlib import Path
@@ -189,6 +190,7 @@ def watch(filepath: Path, angle_mod: bool) -> None:
 @cli.command()
 def guide() -> None:
     """Show user guide and exit."""
+    sys.stdout.reconfigure(encoding="utf-8")
     click.echo(user_guide())
 
 

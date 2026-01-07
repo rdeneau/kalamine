@@ -11,7 +11,7 @@ because they are not recognized by KBDEdit (as of v19.8.0).
 """
 
 import re
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, Dict, List, Optional
 
 if TYPE_CHECKING:
     from ..layout import KeyboardLayout
@@ -43,10 +43,10 @@ def _get_langid(locale: str) -> str:
     return locale_codes[locale]
 
 
-oem_idx = 0
 
-
-def klc_virtual_key(layout: "KeyboardLayout", symbols: list, scan_code: str) -> str:
+def _get_vk_from_symbols(
+    layout: "KeyboardLayout", symbols: List[str], scan_code: str
+) -> Optional[str]:
     oem_102_scan_code = "56"
     if layout.angle_mod:
         oem_102_scan_code = "30"
@@ -81,17 +81,74 @@ def klc_virtual_key(layout: "KeyboardLayout", symbols: list, scan_code: str) -> 
         return "OEM_MINUS"
     elif base == " ":
         return "SPACE"
-    else:
-        MAX_OEM = 9
-        # We affect abitrary OEM VK and it will not match the one
-        # in distributed layout. It can cause issue if a application
-        # is awaiting a particular OEM_ for a hotkey
-        global oem_idx
-        oem_idx += 1
-        if oem_idx <= MAX_OEM:
-            return "OEM_" + str(oem_idx)
-        else:
-            raise Exception("Too many OEM keys")
+
+    return None
+
+
+def _assign_vks(layout: "KeyboardLayout") -> Dict[str, str]:
+    qwerty_vk = load_data("qwerty_vk")
+    key_entries = []
+
+    for key_name in LAYER_KEYS:
+        if key_name.startswith("-"):
+            continue
+        if key_name in ["ae13", "ab11"]:
+            continue
+
+        symbols = []
+        for i in [Layer.BASE, Layer.SHIFT]:
+            layer = layout.layers[i]
+            if key_name in layer:
+                symbol = layer[key_name]
+                if symbol in layout.dead_keys:
+                    symbol = layout.dead_keys[symbol][" "]
+                symbols.append(symbol)
+            else:
+                symbols.append("-1")
+
+        scan_code = SCAN_CODES["klc"][key_name]
+        key_entries.append({"scan_code": scan_code, "symbols": symbols})
+
+    final_vks: Dict[str, str] = {}
+    used_vks = set()
+
+    # Pass 1: Strong matches
+    if not layout.qwerty_shortcuts:
+        for entry in key_entries:
+            vk = _get_vk_from_symbols(layout, entry["symbols"], entry["scan_code"])
+            if vk:
+                final_vks[entry["scan_code"]] = vk
+                used_vks.add(vk)
+
+    # Pass 2: Fallback to QWERTY VK
+    for entry in key_entries:
+        sc = entry["scan_code"]
+        if sc not in final_vks:
+            if layout.qwerty_shortcuts:
+                vk = qwerty_vk[sc]
+                final_vks[sc] = vk
+                used_vks.add(vk)
+            else:
+                default_vk = qwerty_vk.get(sc)
+                if default_vk and default_vk not in used_vks:
+                    final_vks[sc] = default_vk
+                    used_vks.add(default_vk)
+
+    # Pass 3: Arbitrary OEM keys
+    oem_idx = 0
+    MAX_OEM = 9
+    for entry in key_entries:
+        sc = entry["scan_code"]
+        if sc not in final_vks:
+            oem_idx += 1
+            if oem_idx <= MAX_OEM:
+                vk = f"OEM_{oem_idx}"
+                final_vks[sc] = vk
+                used_vks.add(vk)
+            else:
+                raise Exception("Too many OEM keys needed and no standard VKs available")
+
+    return final_vks
 
 
 def klc_keymap(layout: "KeyboardLayout") -> List[str]:
@@ -99,10 +156,8 @@ def klc_keymap(layout: "KeyboardLayout") -> List[str]:
 
     supported_symbols = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-    global oem_idx
-    oem_idx = 0  # Python trick to do equivalent of C static variable
-    output = []
     qwerty_vk = load_data("qwerty_vk")
+    key_entries = []
 
     for key_name in LAYER_KEYS:
         if key_name.startswith("-"):
@@ -136,17 +191,32 @@ def klc_keymap(layout: "KeyboardLayout") -> List[str]:
             description += " " + desc
 
         scan_code = SCAN_CODES["klc"][key_name]
+        key_entries.append(
+            {
+                "scan_code": scan_code,
+                "symbols": symbols,
+                "is_alpha": is_alpha,
+                "description": description,
+            }
+        )
 
-        virtual_key = qwerty_vk[scan_code]
-        if not layout.qwerty_shortcuts:
-            virtual_key = klc_virtual_key(layout, symbols, scan_code)
+    # Assign Virtual Keys
+    final_vks = _assign_vks(layout)
+
+    output = []
+    for entry in key_entries:
+        vk = final_vks[entry["scan_code"]]
+        symbols = entry["symbols"]
+        is_alpha = entry["is_alpha"]
+        description = entry["description"]
+        scan_code = entry["scan_code"]
 
         if layout.has_altgr:
             output.append(
                 "\t".join(
                     [
                         scan_code,
-                        virtual_key,
+                        vk,
                         "1" if is_alpha else "0",  # affected by CapsLock?
                         symbols[0],
                         symbols[1],  # base layer
@@ -163,7 +233,7 @@ def klc_keymap(layout: "KeyboardLayout") -> List[str]:
                 "\t".join(
                     [
                         scan_code,
-                        virtual_key,
+                        vk,
                         "1" if is_alpha else "0",  # affected by CapsLock?
                         symbols[0],
                         symbols[1],  # base layer
@@ -199,8 +269,12 @@ def klc_deadkeys(layout: "KeyboardLayout") -> List[str]:
 
             if alt in layout.dead_keys:
                 alt = layout.dead_keys[alt][" "]
+                if len(alt) > 1:
+                    continue
                 ext = hex_ord(alt) + "@"
             else:
+                if len(alt) > 1:
+                    continue
                 ext = hex_ord(alt)
 
             output.append(f"{hex_ord(base)}\t{ext}\t// {base} -> {alt}")
@@ -227,10 +301,8 @@ def c_keymap(layout: "KeyboardLayout") -> List[str]:
     """Windows C layout, main part."""
 
     supported_symbols = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    qwerty_vk = load_data("qwerty_vk")
+    final_vks = _assign_vks(layout)
 
-    global oem_idx
-    oem_idx = 0  # Python trick to do equivalent of C static variable
     output = []
     for key_name in LAYER_KEYS:
         if key_name.startswith("-"):
@@ -270,9 +342,7 @@ def c_keymap(layout: "KeyboardLayout") -> List[str]:
 
         scan_code = SCAN_CODES["klc"][key_name]
 
-        virtual_key = qwerty_vk[scan_code]
-        if not layout.qwerty_shortcuts:
-            virtual_key = klc_virtual_key(layout, symbols, scan_code)
+        virtual_key = final_vks[scan_code]
 
         if len(virtual_key) == 1:
             virtual_key_id = f"'{virtual_key}'"

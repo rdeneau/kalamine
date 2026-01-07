@@ -49,7 +49,10 @@ def xkb_table(layout: "KeyboardLayout", xkbcomp: bool = False) -> List[str]:
                 elif keysym in XKB_KEY_SYM and len(XKB_KEY_SYM[keysym]) <= max_length:
                     symbol = XKB_KEY_SYM[keysym]
                 else:
-                    symbol = f"U{hex_ord(keysym).upper()}"
+                    try:
+                        symbol = f"U{hex_ord(keysym).upper()}"
+                    except TypeError:
+                        symbol = "VoidSymbol"
             else:
                 desc = " "
                 symbol = "VoidSymbol"
