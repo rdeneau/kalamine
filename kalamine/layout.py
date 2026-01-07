@@ -311,6 +311,20 @@ class KeyboardLayout:
                         shift_key = upper_key(base_key)
                         # shift_key = upper_key(base_key, blank_if_obvious=False)
 
+                # Special keys (esc, f1..f12, ins, del, bspc) shouldn't produce text
+                def is_special_key(label: str) -> bool:
+                    if not label:
+                        return False
+                    label_lower = label.lower().strip()
+                    return label_lower in ("esc", "ins", "del", "bspc") or (
+                        label_lower.startswith("f") and label_lower[1:].isdigit()
+                    )
+
+                if is_special_key(base_label):
+                    base_key = " "
+                if is_special_key(shift_label):
+                    shift_key = " "
+
                 if base_key != " ":
                     self.layers[layer_number][key] = base_key
                 if shift_key != " ":
