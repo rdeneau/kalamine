@@ -4,10 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kalamine"
-version = "0.38"
+version = "0.39"
 description = "a cross-platform Keyboard Layout Maker"
 readme = "README.rst"
-authors = [{ name = "Fabien Cazenave", email = "fabien@cazenave.cc" }]
+authors = [
+    { name = "Fabien Cazenave", email = "fabien@cazenave.cc" },
+    { name = "Romain Deneau", email = "rdeneau@yahoo.fr" },
+]
 license = { text = "MIT License" }
 
 classifiers = [

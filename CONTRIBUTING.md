@@ -1,9 +1,6 @@
-Contributing to Kalamine
-================================================================================
+# Contributing to Kalamine
 
-
-Setup
---------------------------------------------------------------------------------
+## Setup
 
 After checking out the repository, you can install kalamine and its development dependencies like this:
 
@@ -24,9 +21,7 @@ There’s also a Makefile recipe for that:
 make dev
 ```
 
-
-Code Formating
---------------------------------------------------------------------------------
+## Code Formatting
 
 We rely on [ruff] for that, with the isort rule enabled:
 
@@ -41,9 +36,7 @@ Alternative:
 make format
 ```
 
-
-Code Linting
---------------------------------------------------------------------------------
+## Code Linting
 
 We rely on [ruff] and [mypy] for that, with their default configurations:
 
@@ -68,9 +61,7 @@ ruff check --fix kalamine
 [ruff]: https://docs.astral.sh/ruff/
 [mypy]: https://mypy.readthedocs.io
 
-
-Unit Tests
---------------------------------------------------------------------------------
+## Unit Tests
 
 We rely on [pytest] for that, but the sample layouts must be built by
 kalamine first:
@@ -88,9 +79,7 @@ make test
 
 [pytest]: https://docs.pytest.org
 
-
-Before Committing
---------------------------------------------------------------------------------
+## Before Committing
 
 You may ensure manually that your commit will pass the Github CI (continuous integration) with:
 

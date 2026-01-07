@@ -14,7 +14,6 @@ if TYPE_CHECKING:
 
 from ..utils import LAYER_KEYS, ODK_ID, SCAN_CODES, Layer, upper_key
 
-
 GEOMETRY_CLASSMAP = {
     "ansi": "",
     "iso": "iso intlBackslash",
@@ -51,12 +50,10 @@ def raw_json(layout: "KeyboardLayout") -> Dict:
         if key_name.startswith("-"):
             continue
 
-        primary_legend = None
         for probe_layer in [Layer.BASE, Layer.SHIFT, Layer.ALTGR, Layer.ALTGR_SHIFT]:
             legend_probe = layout.legends[probe_layer].get(key_name)
             char_probe = layout.layers[probe_layer].get(key_name)
             if legend_probe and _should_export_legend(legend_probe, char_probe):
-                primary_legend = legend_probe
                 break
         chars = list("")
         legends = ["", "", "", ""]
@@ -105,9 +102,7 @@ def _apply_geometry(svg_root: ET.Element, geometry: Optional[str]) -> None:
     if classes is None:
         return
     keep = [
-        cls
-        for cls in svg_root.get("class", "").split()
-        if cls not in GEOMETRY_TOKENS
+        cls for cls in svg_root.get("class", "").split() if cls not in GEOMETRY_TOKENS
     ]
     new_class = " ".join(filter(None, [classes, " ".join(keep)])).strip()
     svg_root.set("class", new_class)
@@ -189,7 +184,7 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
             if level == 6 and same_symbol(key_name, Layer.ODK, Layer.ODK_SHIFT):
                 continue
 
-            key = svg.find(f".//g[@id=\"{SCAN_CODES['web'][key_name]}\"]", ns)
+            key = svg.find(f'.//g[@id="{SCAN_CODES["web"][key_name]}"]', ns)
             legend = layout.legends[i].get(key_name)
             char = layout.layers[i][key_name]
             text_override = None
