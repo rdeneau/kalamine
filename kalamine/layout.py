@@ -325,6 +325,11 @@ class KeyboardLayout:
                 if is_special_key(shift_label):
                     shift_key = " "
 
+                if base_key.endswith("⇥"):
+                    base_key = base_key[:-1] + "\t"
+                if shift_key.endswith("⇥"):
+                    shift_key = shift_key[:-1] + "\t"
+
                 if base_key != " ":
                     self.layers[layer_number][key] = base_key
                 if shift_key != " ":

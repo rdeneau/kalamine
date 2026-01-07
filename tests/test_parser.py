@@ -6,6 +6,20 @@ from .util import get_layout_dict
 def load_layout(filename: str, angle_mod: bool = False) -> KeyboardLayout:
     return KeyboardLayout(get_layout_dict(filename), angle_mod)
 
+# Layers convention:
+# 0: base
+# 1: shift
+# 2: 1dk (if any)
+# 3: shift + 1dk (if any)
+# 4: altgr (if any)
+# 5: shift + altgr (if any)
+
+# Keys convention (XKB / ISO 9995):
+# > aeXX: numeric row keys
+# > adXX: top     row keys (QCOPW row for Ergo-L, otherwise QWERTY, AZERTY...)
+# > acXX: home    row keys (ASENF row for Ergo-L)
+# > abXX: bottom  row keys (ZXCVB row for Ergo-L)
+# >   XX: position in the row, from left to right: 01..12 (or more)
 
 def test_ansi():
     layout = load_layout("ansi")
@@ -155,3 +169,31 @@ def test_ergolr_ansi():
     assert layout.layers[5]["ad03"] == "≥"
     assert layout.layers[4]["ad04"] == "$"
     assert layout.layers[5]["ad04"] == "*¤"
+
+
+def test_tab():
+    layout_data = {
+        "name": "tab-test",
+        "geometry": "ANSI",
+        "base": """\
+┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓
+│     │     │     │     │     │     │     │     │     │     │     │     │     ┃          ┃
+│     │     │     │     │     │     │     │     │     │     │     │     │     ┃ ⌫        ┃
+┢━━━━━┷━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┺━━┯━━━━━━━┩
+┃        ┃     │ ⇥   │     │     │     │     │     │     │     │     │     │     │       │
+┃ ↹      ┃ ⇥   │     │     │     │     │     │     │     │     │     │     │     │       │
+┣━━━━━━━━┻┱────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┲━━━━┷━━━━━━━┪
+┃         ┃     │     │     │     │     │     │     │     │     │     │     ┃            ┃
+┃ ⇬       ┃     │     │     │     │     │     │     │     │     │     │     ┃ ⏎          ┃
+┣━━━━━━━━━┻━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┲━━┻━━━━━━━━━━━━┫
+┃            ┃     │     │     │     │     │     │     │     │     │     ┃               ┃
+┃ ⇧          ┃     │     │     │     │     │     │     │     │     │     ┃ ⇧             ┃
+┣━━━━━━━┳━━━━┻━━┳━━┷━━━━┱┴─────┴─────┴─────┴─────┴─────┴─┲━━━┷━━━┳━┷━━━━━╋━━━━━━━┳━━━━━━━┫
+┃       ┃       ┃       ┃                                ┃       ┃       ┃       ┃       ┃
+┃ Ctrl  ┃ super ┃ Alt   ┃ ␣                              ┃ Alt   ┃ super ┃ menu  ┃ Ctrl  ┃
+┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛
+"""
+    }
+    layout = KeyboardLayout(layout_data)
+    assert layout.layers[0]["ad01"] == "\t"
+    assert layout.layers[1]["ad02"] == "	"  # Tab character too
