@@ -1,13 +1,29 @@
-name        = "Ergo-L-Sofle"
-name8       = "ergolsof"
-locale      = "fr"
+name        = "Ergo-L-Romain"
+name8       = "ergolrde"
+locale      = "en"
 variant     = "ergol"
-description = "French (Ergo-L RDE Sofle)"
+description = "French (Ergo-L, Romain)"
 author      = "rdeneau"
-url         = "https://github.com/Nuclear-Squid/ergol"
+url         = "https://github.com/rdeneau/ergol"
 geometry    = "ERGO"
 version     = "1.0.0"
 
+# Legend for special keys:
+# lmet = Windows (Left)
+# lalt = Alt (Left)
+# ralt = AltGr (Right)
+# ***  = 1st dead key 1dk (Accents Layer)
+# &&&  = 2nd dead key 2dk (NavNum Layer) (Omitted, Handled by the keyboard directly)
+# ent  = Enter
+# spc  = Space
+# menu = Property (~ Right Click)
+# lctl / rctl = Control (Left / Right)
+
+# Base layer, including 1dk
+#                +-----+
+# shift -------> | ? ¿ | <----- 1dk, shift+key
+# base --------> | / ÷ | <----- 1dk, key
+#                +-----+
 base = '''
 ╭╌╌╌╌╌┰─────┬─────┬─────┬─────┬─────┰─────┬─────┬─────┬─────┬─────┰╌╌╌╌╌┬╌╌╌╌╌╮
 ┆ esc ┃ $   │ '   │ "   │ €   │ %   ┃ |   │ &   │ *   │ #   │ @   ┃ ins ┆     ┆
@@ -24,6 +40,9 @@ base = '''
 ╰╌╌╌╌╌┸─────┴─────┴─────┴─────┴─────┸─────┴─────┴─────┴─────┴─────┚
 '''
 
+# AltGr layer, including standard dead keys
+# https://github.com/OneDeadKey/kalamine/blob/main/docs/README.md#standard-dead-keys
+# Example: add a grave accent: AltGr + N, Shift + I -> Ì
 altgr = '''
 ╭╌╌╌╌╌┰─────┬─────┬─────┬─────┬─────┰─────┬─────┬─────┬─────┬─────┰╌╌╌╌╌┬╌╌╌╌╌╮
 ┆     ┃     │     │     │     │     ┃     │     │     │     │     ┃     ┆     ┆
@@ -40,6 +59,7 @@ altgr = '''
 ╰╌╌╌╌╌┸─────┴─────┴─────┴─────┴─────┸─────┴─────┴─────┴─────┴─────┚
 '''
 
+# https://github.com/OneDeadKey/kalamine/blob/main/docs/README.md#space-bar
 [spacebar]
 shift       = "\u00a0"  # NO-BREAK SPACE
 altgr       = "\u0020"  # SPACE

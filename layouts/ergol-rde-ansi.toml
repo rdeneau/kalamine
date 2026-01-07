@@ -1,25 +1,25 @@
-name        = "Ergo-L-RDE"
-name8       = "ergolrde"
-locale      = "fr"
+name        = "Ergo-L-Romain-ANSI"
+name8       = "ergolrda"
+locale      = "en"
 variant     = "ergol"
-description = "French (Ergo-L RDE ANSI)"
-author      = "NuclearSquid & rdeneau"
-url         = "https://github.com/Nuclear-Squid/ergol"
+description = "French (Ergo-L, Romain)"
+author      = "rdeneau"
+url         = "https://github.com/rdeneau/ergol"
 geometry    = "ANSI"
 version     = "1.0.0"
 
-# Légende des touches spéciales :
-# lmet = Touche Windows (Gauche)
-# lalt = Touche Alt (Gauche)
-# ralt = Touche AltGr (Droite)
-# ***  = 1e touche morte 1dk (Couche Accents)
-# &&&  = 2e touche morte 2dk (Couche NavNum)
-# ent  = Touche Entrée
-# spc  = Touche Espace
-# menu = Touche Menu (Clic droit / Propriétés)
-# lctl / rctl = Touches Control (Gauche / Droite)
+# Legend for special keys:
+# lmet = Windows (Left)
+# lalt = Alt (Left)
+# ralt = AltGr (Right)
+# ***  = 1st dead key 1dk (Accents Layer)
+# &&&  = 2nd dead key 2dk (NavNum Layer) (Omitted, Handled by the keyboard directly)
+# ent  = Enter
+# spc  = Space
+# menu = Property (~ Right Click)
+# lctl / rctl = Control (Left / Right)
 
-# Couche de base, intégrant la 1dk
+# Base layer, including 1dk
 #                +-----+
 # shift -------> | ? ¿ | <----- 1dk, shift+key
 # base --------> | / ÷ | <----- 1dk, key
@@ -43,9 +43,9 @@ base = '''
 ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛
 '''
 
-# Couche AltGr, intégrant des standard dead keys
+# AltGr layer, including standard dead keys
 # https://github.com/OneDeadKey/kalamine/blob/main/docs/README.md#standard-dead-keys
-# Exemple : ajouter un accent grave : AltGr + N, Shift + I -> Ì
+# Example: add a grave accent: AltGr + N, Shift + I -> Ì
 altgr = '''
 ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓
 │     │     │     │     │     │     │     │     │     │     │     │     │     ┃          ┃

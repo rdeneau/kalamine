@@ -133,8 +133,8 @@ def test_ergol_rde_ansi():
     assert layout.layers[5]["ad04"] == "*¤"
 
 
-def test_ergol_rde_sofle():
-    layout = load_layout("ergol-rde-sofle")
+def test_ergol_rde_ergo():
+    layout = load_layout("ergol-rde-ergo")
     assert layout.meta["locale"] == "fr"
     assert layout.meta["geometry"] == "ERGO"
     assert layout.has_altgr
