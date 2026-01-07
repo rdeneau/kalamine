@@ -4,6 +4,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const keyboard = document.querySelector('x-keyboard');
   const input    = document.querySelector('input');
   const geometry = document.querySelector('#geometry');
+  const svgLink  = document.querySelector('a[href="/svg"]');
+
+  const updateSvgHref = (geom) => {
+    if (!svgLink || !geometry) {
+      return;
+    }
+    const value = geom || geometry.value;
+    svgLink.href = value ? `/svg?geometry=${encodeURIComponent(value)}` : '/svg';
+  };
 
   if (!keyboard.layout) {
     console.warn('web components are not supported');
@@ -21,10 +30,12 @@ window.addEventListener('DOMContentLoaded', () => {
         data.legends || {},
       );
       geometry.value = shape;
+      updateSvgHref(shape);
     });
 
   geometry.onchange = (event) => {
     keyboard.geometry = event.target.value;
+    updateSvgHref(event.target.value);
   };
 
   /**

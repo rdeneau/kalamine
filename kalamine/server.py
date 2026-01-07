@@ -3,6 +3,7 @@ import webbrowser
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from importlib import metadata
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 from xml.etree import ElementTree as ET
 
 import click
@@ -175,27 +176,35 @@ def keyboard_server(file_path: Path, angle_mod: bool = False) -> None:
             # XXX always reloads the layout on the root page, never in sub pages
             nonlocal kb_layout
             nonlocal angle_mod
-            if self.path == "/json":
+            parsed = urlparse(self.path)
+            path = parsed.path
+            params = parse_qs(parsed.query)
+            geometry_override = params.get("geometry", [None])[0]
+
+            if path == "/json":
                 send(web.pretty_json(kb_layout), content="application/json")
-            elif self.path == "/keylayout":
+            elif path == "/keylayout":
                 # send(keylayout.keylayout(kb_layout), content='application/xml')
                 send(keylayout.keylayout(kb_layout))
-            elif self.path == "/ahk":
+            elif path == "/ahk":
                 send(ahk.ahk(kb_layout))
-            elif self.path == "/klc":
+            elif path == "/klc":
                 send(klc.klc(kb_layout), charset="utf-16-le", content="text")
-            elif self.path == "/rc":
+            elif path == "/rc":
                 send(klc.klc_rc(kb_layout), content="text")
-            elif self.path == "/c":
+            elif path == "/c":
                 send(klc.klc_c(kb_layout), content="text")
-            elif self.path == "/xkb_keymap":
+            elif path == "/xkb_keymap":
                 send(xkb.xkb_keymap(kb_layout))
-            elif self.path == "/xkb_symbols":
+            elif path == "/xkb_symbols":
                 send(xkb.xkb_symbols(kb_layout))
-            elif self.path == "/svg":
-                utf8 = ET.tostring(web.svg(kb_layout).getroot(), encoding="unicode")
+            elif path == "/svg":
+                utf8 = ET.tostring(
+                    web.svg(kb_layout, geometry_override).getroot(),
+                    encoding="unicode",
+                )
                 send(utf8, content="image/svg+xml")
-            elif self.path == "/":
+            elif path == "/":
                 kb_layout = KeyboardLayout(load_layout(file_path), angle_mod)  # refresh
                 send(main_page(kb_layout, angle_mod), content="text/html")
             else:

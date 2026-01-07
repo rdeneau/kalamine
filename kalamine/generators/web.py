@@ -15,6 +15,21 @@ if TYPE_CHECKING:
 from ..utils import LAYER_KEYS, ODK_ID, SCAN_CODES, Layer, upper_key
 
 
+GEOMETRY_CLASSMAP = {
+    "ansi": "",
+    "iso": "iso intlBackslash",
+    "abnt": "iso intlBackslash intlRo",
+    "jis": "iso intlYen intlRo jis",
+    "alt": "alt intlYen",
+    "ks": "alt intlYen ks",
+    "ol60": "ergo ol60",
+    "ol50": "ergo ol50",
+    "ol40": "ergo ol40",
+}
+
+GEOMETRY_TOKENS = set(" ".join(GEOMETRY_CLASSMAP.values()).split()) | {"am"}
+
+
 def _should_export_legend(label: str, char: Optional[str]) -> bool:
     trimmed = label.strip()
     if len(trimmed) <= 1:
@@ -75,7 +90,22 @@ def pretty_json(layout: "KeyboardLayout") -> str:
     )
 
 
-def svg(layout: "KeyboardLayout") -> ET.ElementTree:
+def _apply_geometry(svg_root: ET.Element, geometry: Optional[str]) -> None:
+    if not geometry:
+        return
+    classes = GEOMETRY_CLASSMAP.get(geometry.lower())
+    if classes is None:
+        return
+    keep = [
+        cls
+        for cls in svg_root.get("class", "").split()
+        if cls not in GEOMETRY_TOKENS
+    ]
+    new_class = " ".join(filter(None, [classes, " ".join(keep)])).strip()
+    svg_root.set("class", new_class)
+
+
+def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementTree:
     """SVG drawing"""
 
     svg_ns = "http://www.w3.org/2000/svg"
@@ -110,6 +140,7 @@ def svg(layout: "KeyboardLayout") -> ET.ElementTree:
     if res is None:
         return ET.ElementTree()
     svg = ET.ElementTree(ET.fromstring(res.decode("utf-8")))
+    _apply_geometry(svg.getroot(), geometry)
 
     for key_name in LAYER_KEYS:
         if key_name.startswith("-"):
