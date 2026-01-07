@@ -15,6 +15,15 @@ if TYPE_CHECKING:
 from ..utils import LAYER_KEYS, ODK_ID, SCAN_CODES, Layer, upper_key
 
 
+def _should_export_legend(label: str, char: Optional[str]) -> bool:
+    trimmed = label.strip()
+    if len(trimmed) <= 1:
+        return False
+    if char and trimmed == char:
+        return False
+    return any(ch.isalnum() for ch in trimmed)
+
+
 # fmt: off
 def raw_json(layout: "KeyboardLayout") -> Dict:
     """JSON layout descriptor"""
@@ -22,15 +31,26 @@ def raw_json(layout: "KeyboardLayout") -> Dict:
     # flatten the keymap: each key has an array of 2-4 characters
     # correcponding to Base, Shift, AltGr, AltGr+Shift
     keymap: Dict[str, List[str]] = {}
+    legendmap: Dict[str, List[str]] = {}
     for key_name in LAYER_KEYS:
         if key_name.startswith("-"):
             continue
         chars = list("")
-        for i in [Layer.BASE, Layer.SHIFT, Layer.ALTGR, Layer.ALTGR_SHIFT]:
-            if key_name in layout.layers[i]:
-                chars.append(layout.layers[i][key_name])
+        legends = ["", "", "", ""]
+        for idx, layer in enumerate(
+            [Layer.BASE, Layer.SHIFT, Layer.ALTGR, Layer.ALTGR_SHIFT]
+        ):
+            if key_name in layout.layers[layer]:
+                chars.append(layout.layers[layer][key_name])
+            legend = layout.legends[layer].get(key_name)
+            char = layout.layers[layer].get(key_name)
+            if legend and _should_export_legend(legend, char):
+                legends[idx] = legend
         if chars:
-            keymap[SCAN_CODES["web"][key_name]] = chars
+            scancode = SCAN_CODES["web"][key_name]
+            keymap[scancode] = chars
+            if any(legends):
+                legendmap[scancode] = legends
 
     return {
         "name":        layout.meta["name"],
@@ -39,6 +59,7 @@ def raw_json(layout: "KeyboardLayout") -> Dict:
         "keymap":      keymap,
         "deadkeys":    layout.dead_keys,
         "altgr":       layout.has_altgr,
+        "legends":     legendmap,
     }
 # fmt: on
 

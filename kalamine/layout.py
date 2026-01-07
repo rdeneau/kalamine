@@ -150,6 +150,7 @@ class KeyboardLayout:
 
         # initialize a blank layout
         self.layers: Dict[Layer, Dict[str, str]] = {layer: {} for layer in Layer}
+        self.legends: Dict[Layer, Dict[str, str]] = {layer: {} for layer in Layer}
         self.dk_set: Set[str] = set()
         self.dead_keys: Dict[str, Dict[str, str]] = {}  # dictionary subset of DEAD_KEYS
         # self.meta = Dict[str, str] = {} # default parameters, hardcoded
@@ -290,6 +291,13 @@ class KeyboardLayout:
                 base_key = ("*" if base[i - 1] == "*" else "") + base[i]
                 shift_key = ("*" if shift[i - 1] == "*" else "") + shift[i]
 
+                base_label = self._extract_cell_label(base, i)
+                if base_label:
+                    self.legends[layer_number][key] = base_label
+                shift_label = self._extract_cell_label(shift, i)
+                if shift_label:
+                    self.legends[layer_number.next()][key] = shift_label
+
                 # in the BASE layer, if the base character is undefined, shift prevails
                 if base_key == " ":
                     if layer_number == Layer.BASE:
@@ -314,6 +322,26 @@ class KeyboardLayout:
 
                 i += 6
             j += 1
+
+    @staticmethod
+    def _is_cell_border(char: str) -> bool:
+        if not char:
+            return True
+        code_point = ord(char)
+        return 0x2500 <= code_point <= 0x257F
+
+    @classmethod
+    def _extract_cell_label(cls, line: List[str], index: int) -> str:
+        if index >= len(line):
+            return ""
+        left = index
+        while left > 0 and not cls._is_cell_border(line[left - 1]):
+            left -= 1
+        right = index
+        max_index = len(line) - 1
+        while right < max_index and not cls._is_cell_border(line[right + 1]):
+            right += 1
+        return "".join(line[left : right + 1]).strip()
 
     ###
     # Geometry: base, full, altgr

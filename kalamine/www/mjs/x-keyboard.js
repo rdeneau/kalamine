@@ -127,11 +127,12 @@ function getModifierLevel(modifiers, platform) {
  * Keyboard Layout API (public)
  */
 
-function newKeyboardLayout(keyMap = {}, deadKeys = {}, geometry = '') {
+function newKeyboardLayout(keyMap = {}, deadKeys = {}, geometry = '', legends = {}) {
   const modifiers = { ...MODIFIERS };
   const deadKeyDict = getDeadKeyDict(deadKeys);
   let pendingDK;
   let platform = '';
+  let legendMap = legends || {};
 
   return {
     get keyMap() {
@@ -139,6 +140,9 @@ function newKeyboardLayout(keyMap = {}, deadKeys = {}, geometry = '') {
     },
     get deadKeys() {
       return deadKeys;
+    },
+    get keyLegends() {
+      return legendMap;
     },
     get pendingDK() {
       return pendingDK;
@@ -369,10 +373,19 @@ const gKey = (className, finger, x, id, children = emptyKey) =>
  * Keyboard Layout Utils
  */
 
+const hasAlphaNum = value =>
+  Array.from(value).some(char => {
+    const lower = char.toLowerCase();
+    const upper = char.toUpperCase();
+    return lower !== upper || (char >= '0' && char <= '9');
+  });
+
 const keyLevel = (level, label, position) => {
   const attrs = { ...position };
   const symbol = symbols[label] || '';
-  const content = symbol || (label || '').slice(-1);
+  const normalized = (label || '').trim();
+  const showFullLabel = normalized.length > 1 && hasAlphaNum(normalized);
+  const content = symbol || (showFullLabel ? normalized : normalized.slice(-1));
   let className = '';
   if (level > 4) {
     className = 'dk';
@@ -387,12 +400,24 @@ const keyLevel = (level, label, position) => {
 const altUpperChar = (base, shift) =>
   shift && base !== shift.toLowerCase() ? shift : '';
 
-function drawKey(element, keyMap) {
-  const keyChars = keyMap[element.parentNode.id];
+function drawKey(element, keyMap, legendMap = {}) {
+  const keyId = element.parentNode.id;
+  const keyChars = keyMap[keyId];
   if (!keyChars) {
     element.innerHTML = '';
     return;
   }
+  const legends = legendMap[keyId] || [];
+  const overrideLabel = (index, fallback) => {
+    const legend = (legends[index] || '').trim();
+    if (!legend) {
+      return fallback;
+    }
+    if (legend.length > 1 || !fallback) {
+      return legend;
+    }
+    return fallback;
+  };
   /**
    * What key label should we display when the `base` and `shift` layers have
    * the lowercase and uppercase versions of the same letter?
@@ -415,10 +440,10 @@ function drawKey(element, keyMap) {
   const shift = base || l2.toLowerCase() === l1 ? l2 : l1;
   const salt = altUpperChar(l3, l4);
   element.innerHTML = `
-    ${keyLevel(1, base, { x: 0.28, y: 0.79 })}
-    ${keyLevel(2, shift, { x: 0.28, y: 0.41 })}
-    ${keyLevel(3, l3, { x: 0.7, y: 0.79 })}
-    ${keyLevel(4, salt, { x: 0.7, y: 0.41 })}
+    ${keyLevel(1, overrideLabel(0, base), { x: 0.28, y: 0.79 })}
+    ${keyLevel(2, overrideLabel(1, shift), { x: 0.28, y: 0.41 })}
+    ${keyLevel(3, overrideLabel(2, l3), { x: 0.7, y: 0.79 })}
+    ${keyLevel(4, overrideLabel(3, salt), { x: 0.7, y: 0.41 })}
     ${keyLevel(5, '', { x: 0.7, y: 0.79 })}
     ${keyLevel(6, '', { x: 0.7, y: 0.41 })}
   `;
@@ -1182,7 +1207,7 @@ class Keyboard extends HTMLElement {
     this._state.layout.platform = this.platform;
     this.geometry = this._state.geometry;
     Array.from(this.root.querySelectorAll('.key')).forEach(key =>
-      drawKey(key, value.keyMap),
+      drawKey(key, value.keyMap, value.keyLegends),
     );
   }
 
@@ -1197,8 +1222,8 @@ class Keyboard extends HTMLElement {
     return keys;
   }
 
-  setKeyboardLayout(keyMap, deadKeys, geometry) {
-    this.layout = newKeyboardLayout(keyMap, deadKeys, geometry);
+  setKeyboardLayout(keyMap, deadKeys, geometry, legends = {}) {
+    this.layout = newKeyboardLayout(keyMap, deadKeys, geometry, legends);
   }
 
   get keys() { // XXX return IDs only and rely on setCustom{Colors,Opacity}?

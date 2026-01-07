@@ -14,7 +14,12 @@ window.addEventListener('DOMContentLoaded', () => {
     .then(response => response.json())
     .then(data => {
       const shape = angle_mod ? "iso" : data.geometry.replace('ergo', 'ol60').toLowerCase();
-      keyboard.setKeyboardLayout(data.keymap, data.deadkeys, shape);
+      keyboard.setKeyboardLayout(
+        data.keymap,
+        data.deadkeys,
+        shape,
+        data.legends || {},
+      );
       geometry.value = shape;
     });
 
