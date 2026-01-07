@@ -11,10 +11,13 @@
     }
     text {
       fill: #444;
-      font: normal 20px sans-serif;
+      font: normal 18px sans-serif;
       text-align: center;
       text-anchor: middle;
     }
+    .fn_x { font-size: 16px; }
+    .fn_xx { font-size: 16px; }
+    .nav.num { font-size: 16px; }
 
     .arrow { font-family: "Consolas", monospace; }
     .specialKey rect { fill: #e4e4e4; }
@@ -60,8 +63,8 @@
 
     #sym rect { fill: #99f; }
     #nav rect { fill: #e83; }
-    .sym { fill: #44f; transform: translate(0, -23px); }
-    .nav { fill: #e83; }
+    .sym { fill: #44f; }
+    .nav { fill: #e83; text-align: center; }
 
     .level1, .level2 { opacity: 0.8; }
     .sym             { opacity: 0.6; }
@@ -102,172 +105,148 @@
     <g class="col_1">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F2</text>
-        <text x="12.8" y="20.6" class="level2">$</text>
-        <text x="38.0" y="43.4" class="sym">¤</text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F2</text>
+        <text x="10.0" y="18.6" class="level2">$</text>
+        <text x="42.0" y="45.0" class="accent">¤</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">Q</text>
-        <text x="12.8" y="43.4" class="accent">â</text>
-        <text x="38.0" y="43.4" class="sym">^</text>
+        <text x="10.0" y="18.6" class="level2">Q</text>
+        <text x="42.0" y="45.0" class="accent">â</text>
+        <text x="42.0" y="18.6" class="sym">^</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">A</text>
-        <text x="12.8" y="43.4" class="accent">à</text>
-        <text x="38.0" y="43.4" class="sym">{</text>
+        <text x="10.0" y="18.6" class="level2">A</text>
+        <text x="42.0" y="45.0" class="accent">à</text>
+        <text x="42.0" y="18.6" class="sym">{</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">Z</text>
-        <text x="12.8" y="43.4" class="accent">ñ</text>
-        <text x="38.0" y="43.4" class="sym">~</text>
+        <text x="10.0" y="18.6" class="level2">Z</text>
+        <text x="42.0" y="45.0" class="accent">ñ</text>
+        <text x="42.0" y="18.6" class="sym">~</text>
       </g>
     </g>
 
     <g class="col_2">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F3</text>
-        <text x="12.8" y="20.6" class="level2">'</text>
-        <text x="38.0" y="43.4" class="sym">
-          <title>Guillemet gauche français</title>
-          «
-        </text>
-        <text x="12.8" y="28" class="accent">
-          <title>Apostrophe typographique (single right quotation mark)</title>
-          ’
-        </text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F3</text>
+        <text x="10.0" y="18.6" class="level2">'</text>
+        <text x="42.0" y="45.0" class="accent">« <title>Left guillemet</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">C</text>
-        <text x="12.8" y="43.4" class="accent">ç</text>
-        <text x="38.0" y="43.4" class="sym">&lt;</text>
-        <text x="35.0" y="43.4" class="nav text">hom</text>
+        <text x="10.0" y="18.6" class="level2">C</text>
+        <text x="42.0" y="45.0" class="accent">ç</text>
+        <text x="42.0" y="18.6" class="sym">&lt;</text>
+        <text x="27.0" y="31.0" class="nav text">hom</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">S</text>
-        <text x="12.8" y="43.4" class="accent">é</text>
-        <text x="38.0" y="43.4" class="sym">(</text>
-        <text x="38.0" y="43.4" class="nav arrow">←</text>
+        <text x="10.0" y="18.6" class="level2">S</text>
+        <text x="42.0" y="45.0" class="accent">é</text>
+        <text x="42.0" y="18.6" class="sym">(</text>
+        <text x="27.0" y="31.0" class="nav arrow">←</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">X</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Tiret insécable</title>
-          ‑
-        </text>
-        <text x="38.0" y="43.4" class="sym">[</text>
-        <text x="38.0" y="43.4" class="nav text">ins</text>
+        <text x="10.0" y="18.6" class="level2">X</text>
+        <text x="42.0" y="18.6" class="sym">[</text>
+        <text x="42.0" y="45.0" class="accent">⇥ <title>Tab</title></text>
+        <text x="27.0" y="31.0" class="nav text">ins</text>
       </g>
     </g>
 
     <g class="col_3">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F4</text>
-        <text x="12.8" y="20.6" class="level2">"</text>
-        <text x="38.0" y="43.4" class="sym">
-          <title>Guillemet droit français</title>
-          »
-        </text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F4</text>
+        <text x="10.0" y="18.6" class="level2">"</text>
+        <text x="42.0" y="45.0" class="accent">» <title>Right guillemet</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">O</text>
-        <text x="12.8" y="43.4" class="accent">œ</text>
-        <text x="38.0" y="43.4" class="sym">&gt;</text>
-        <text x="38.0" y="43.4" class="nav arrow">↑</text>
+        <text x="10.0" y="18.6" class="level2">O</text>
+        <text x="42.0" y="45.0" class="accent">œ</text>
+        <text x="42.0" y="18.6" class="sym">&gt;</text>
+        <text x="27.0" y="31.0" class="nav arrow">↑</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">E</text>
-        <text x="12.8" y="43.4" class="accent">è</text>
-        <text x="38.0" y="43.4" class="sym">)</text>
-        <text x="38.0" y="43.4" class="nav arrow">↓</text>
+        <text x="10.0" y="18.6" class="level2">E</text>
+        <text x="42.0" y="45.0" class="accent">è</text>
+        <text x="42.0" y="18.6" class="sym">)</text>
+        <text x="27.0" y="31.0" class="nav arrow">↓</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="43.4" class="level1">-</text>
-        <text x="12.8" y="20.6" class="level2">?</text>
-        <text x="38.0" y="43.4" class="sym">]</text>
-        <text x="38.0" y="43.4" class="nav text">del</text>
+        <text x="10.0" y="45.0" class="level1">-</text>
+        <text x="10.0" y="18.6" class="level2">?</text>
+        <text x="42.0" y="18.6" class="sym">]</text>
+        <text x="27.0" y="31.0" class="nav text">del</text>
+        <text x="42.0" y="45.0" class="accent">— <title>em dash (fr: Tiret cadratin)</title></text>
       </g>
     </g>
 
     <g class="col_4">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F5</text>
-        <text x="12.8" y="20.6" class="level2">€</text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F5</text>
+        <text x="10.0" y="18.6" class="level2">€</text>
+        <text x="42.0" y="45.0" class="accent">’ <title>Punctuation apostrophe (single right quotation mark)</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">P</text>
-        <text x="12.8" y="43.4" class="accent">ô</text>
-        <text x="38.0" y="43.4" class="sym">$</text>
-        <text x="38.0" y="43.4" class="nav text">end</text>
+        <text x="10.0" y="18.6" class="level2">P</text>
+        <text x="42.0" y="45.0" class="accent">ô</text>
+        <text x="42.0" y="18.6" class="sym">$</text>
+        <text x="27.0" y="31.0" class="nav text">end</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">N</text>
-        <text x="12.8" y="43.4" class="accent">ê</text>
-        <text x="38.0" y="43.4" class="sym">}</text>
-        <text x="38.0" y="43.4" class="nav arrow">→</text>
+        <text x="10.0" y="18.6" class="level2">N</text>
+        <text x="42.0" y="45.0" class="accent">ê</text>
+        <text x="42.0" y="18.6" class="sym">}</text>
+        <text x="27.0" y="31.0" class="nav arrow">→</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">V</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Tiret demi-cadratin (en dash)</title>
-          –
-        </text>
-        <text x="38.0" y="43.4" class="sym">
-          <title>(underscore)</title>
-          _
-        </text>
-        <text x="38.0" y="43.4" class="nav" style="font-size: 13px;">⌫</text>
+        <text x="10.0" y="18.6" class="level2">V</text>
+        <text x="42.0" y="45.0" class="accent">– <title>En dash (fr: Tiret demi-cadratin)</title></text>
+        <text x="42.0" y="18.6" class="sym">_ <title>underscore</title></text>
+        <text x="27.0" y="31.0" class="nav text"> ⌫ <title>backspace</title></text>
       </g>
     </g>
 
     <g class="col_5">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F6</text>
-        <text x="12.8" y="20.6" class="level2">%</text>
-        <text x="38.0" y="43.4" class="sym">°</text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F6</text>
+        <text x="10.0" y="18.6" class="level2">%</text>
+        <text x="42.0" y="45.0" class="accent">°</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">W</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Paragraphe (section sign)</title>
-          §
-        </text>
-        <text x="38.0" y="43.4" class="sym">%</text>
-        <text x="38.0" y="43.4" class="nav">⇞</text>
+        <text x="10.0" y="18.6" class="level2">W</text>
+        <text x="42.0" y="45.0" class="accent">§ <title>Paragraph sign (section sign)</title></text>
+        <text x="42.0" y="18.6" class="sym">%</text>
+        <text x="27.0" y="31.0" class="nav">⇞</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">F</text>
-        <text x="12.8" y="43.4" class="accent">≠</text>
-        <text x="38.0" y="43.4" class="sym">=</text>
-        <text x="38.0" y="43.4" class="nav">⇟</text>
+        <text x="10.0" y="18.6" class="level2">F</text>
+        <text x="42.0" y="45.0" class="accent">≠</text>
+        <text x="42.0" y="18.6" class="sym">=</text>
+        <text x="27.0" y="31.0" class="nav">⇟</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">B</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Tiret cadratin (em dash)</title>
-          —
-        </text>
-        <text x="38.0" y="43.4" class="sym">#</text>
-        <text x="40.0" y="31.6" class="nav" style="font-size: 10px;">print</text>
-        <text x="42.0" y="43.4" class="nav" style="font-size: 10px;">scr.</text>
+        <text x="10.0" y="18.6" class="level2">B</text>
+        <text x="42.0" y="18.6" class="sym">#</text>
+        <text x="27.0" y="31.0" class="nav">⎙ <title>print screen</title></text>
+        <text x="42.0" y="45.0" class="accent">‑ <title>Nonbreaking hyphen (fr: Tiret insécable)</title></text>
       </g>
     </g>
 
@@ -307,168 +286,150 @@
     <g class="col_6">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F8</text>
-        <text x="12.8" y="20.6" class="level2">|</text>
-        <text x="38.0" y="43.4" class="sym">≤</text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F8</text>
+        <text x="10.0" y="18.6" class="level2">|</text>
+        <text x="42.0" y="45.0" class="accent">÷</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">J</text>
-        <text x="12.8" y="43.4" class="accent" style="font-size: 13px;">
-          <title>(leftwards arrow with hook)</title>
-          ↩
-        </text>
-        <text x="38.0" y="43.4" class="sym">/</text>
-        <text x="38.0" y="43.4" class="nav">/</text>
+        <text x="10.0" y="18.6" class="level2">J</text>
+        <text x="42.0" y="45.0" class="accent" style="font-size: 13px;">↩ <title>Curly enter (leftwards arrow with hook)</title></text>
+        <text x="42.0" y="18.6" class="sym">/</text>
+        <text x="27.0" y="31.0" class="nav">/</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">L</text>
-        <text x="12.8" y="43.4" class="accent">↔</text>
-        <text x="38.0" y="43.4" class="sym">\</text>
-        <text x="38.0" y="43.4" class="nav">.</text>
+        <text x="10.0" y="18.6" class="level2">L</text>
+        <text x="42.0" y="45.0" class="accent">↔</text>
+        <text x="42.0" y="18.6" class="sym">\</text>
+        <text x="27.0" y="31.0" class="nav">.</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="43.4" class="level1">.</text>
-        <text x="12.8" y="20.6" class="level2">:</text>
-        <text x="38.0" y="43.4" class="sym">!</text>
-        <text x="38.0" y="43.4" class="nav">-</text>
+        <text x="10.0" y="45.0" class="level1">.</text>
+        <text x="10.0" y="18.6" class="level2">:</text>
+        <text x="42.0" y="18.6" class="sym">!</text>
+        <text x="42.0" y="45.0" class="accent">· <title>Middle dot (fr: Point médian)</title></text>
+        <text x="27.0" y="31.0" class="nav">-</text>
       </g>
     </g>
 
     <g class="col_7">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="17.8" y="43.4" class="level1">F9</text>
-        <text x="12.8" y="20.6" class="level2">&amp;</text>
-        <text x="38.0" y="43.4" class="sym">≥</text>
+        <text x="12.8" y="45.0" class="level1 fn_x">F9</text>
+        <text x="10.0" y="18.6" class="level2">&amp;</text>
+        <text x="42.0" y="45.0" class="accent">≤</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">M</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Mu</title>
-          µ
-        </text>
-        <text x="38.0" y="43.4" class="sym">&amp;</text>
-        <text x="38.0" y="43.4" class="nav">7</text>
+        <text x="10.0" y="18.6" class="level2">M</text>
+        <text x="42.0" y="45.0" class="accent">µ <title>Mu</title></text>
+        <text x="42.0" y="18.6" class="sym">&amp;</text>
+        <text x="27.0" y="31.0" class="nav num">7</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">R</text>
-        <text x="12.8" y="43.4" class="accent">→</text>
-        <text x="38.0" y="43.4" class="sym">+</text>
-        <text x="38.0" y="43.4" class="nav">4</text>
+        <text x="10.0" y="18.6" class="level2">R</text>
+        <text x="42.0" y="45.0" class="accent">→</text>
+        <text x="42.0" y="18.6" class="sym">+</text>
+        <text x="27.0" y="31.0" class="nav num">4</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">H</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Point de suspension (Ellipsis)</title>
-          …
-        </text>
-        <text x="38.0" y="43.4" class="sym">|</text>
-        <text x="38.0" y="43.4" class="nav">1</text>
+        <text x="10.0" y="18.6" class="level2">H</text>
+        <text x="42.0" y="45.0" class="accent">… <title>Ellipsis (fr: Point de suspension)</title></text>
+        <text x="42.0" y="18.6" class="sym">|</text>
+        <text x="27.0" y="31.0" class="nav">1</text>
       </g>
     </g>
 
     <g class="col_8">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="23.8" y="43.4" class="level1">F10</text>
-        <text x="12.8" y="20.6" class="level2">*</text>
-        <text x="38.0" y="43.4" class="sym">×</text>
-        <text x="12.8" y="28" class="accent">
-          <title>Point médian (Middle dot)</title>
-          ·
-        </text>
+        <text x="17.8" y="45.0" class="level1 fn_xx">F10</text>
+        <text x="10.0" y="18.6" class="level2">*</text>
+        <text x="42.0" y="45.0" class="accent">≥</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">D</text>
-        <text x="38.0" y="43.4" class="sym">*</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Puce (black small circle)</title>
-          •
-        </text>
-        <text x="38.0" y="43.4" class="nav">8</text>
+        <text x="10.0" y="18.6" class="level2">D</text>
+        <text x="42.0" y="18.6" class="sym">*</text>
+        <text x="42.0" y="45.0" class="accent">• <title>Bullet (black small circle)</title></text>
+        <text x="27.0" y="31.0" class="nav">8</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">T</text>
-        <text x="12.8" y="43.4" class="accent">î</text>
-        <text x="38.0" y="43.4" class="sym">-</text>
-        <text x="38.0" y="43.4" class="nav">5</text>
+        <text x="10.0" y="18.6" class="level2">T</text>
+        <text x="42.0" y="45.0" class="accent">î</text>
+        <text x="42.0" y="18.6" class="sym">-</text>
+        <text x="27.0" y="31.0" class="nav num">5</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">G</text>
-        <text x="12.8" y="43.4" class="accent">
-          <title>Touche morte pour les lettres grecques</title>
-          α
-        </text>
-        <text x="38.0" y="43.4" class="sym">;</text>
-        <text x="38.0" y="43.4" class="nav">2</text>
+        <text x="10.0" y="18.6" class="level2">G</text>
+        <text x="42.0" y="45.0" class="accent">α <title>Dead key for Greek letters</title></text>
+        <text x="42.0" y="18.6" class="sym">:</text>
+        <text x="27.0" y="31.0" class="nav num">2</text>
       </g>
     </g>
 
     <g class="col_9">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="23.8" y="43.4" class="level1">F11</text>
-        <text x="12.8" y="20.6" class="level2">#</text>
-        <text x="38.0" y="43.4" class="sym">±</text>
+        <text x="17.8" y="45.0" class="level1 fn_xx">F11</text>
+        <text x="10.0" y="18.6" class="level2">#</text>
+        <text x="42.0" y="45.0" class="accent">±</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="43.4" class="level1 accent">★</text>
-        <text x="12.8" y="20.6" class="level2">!</text>
-        <text x="38.0" y="43.4" class="sym">`</text>
-        <text x="38.0" y="43.4" class="nav">9</text>
+        <text x="10.0" y="45.0" class="level1 accent">★</text>
+        <text x="10.0" y="18.6" class="level2">!</text>
+        <text x="42.0" y="18.6" class="sym">`</text>
+        <text x="27.0" y="31.0" class="nav num">9</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">I</text>
-        <text x="12.8" y="43.4" class="accent">ï</text>
-        <text x="38.0" y="43.4" class="sym">'</text>
-        <text x="38.0" y="43.4" class="nav">6</text>
+        <text x="10.0" y="18.6" class="level2">I</text>
+        <text x="42.0" y="45.0" class="accent">ï</text>
+        <text x="42.0" y="18.6" class="sym">'</text>
+        <text x="27.0" y="31.0" class="nav num">6</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="43.4" class="level1">,</text>
-        <text x="12.8" y="20.6" class="level2">;</text>
-        <text x="38.0" y="43.4" class="sym">:</text>
-        <text x="38.0" y="43.4" class="nav">3</text>
+        <text x="10.0" y="45.0" class="level1">,</text>
+        <text x="10.0" y="18.6" class="level2">;</text>
+        <text x="42.0" y="18.6" class="sym">;</text>
+        <text x="27.0" y="31.0" class="nav num">3</text>
       </g>
     </g>
 
     <g class="col_0">
       <g transform="translate(0 -60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="23.8" y="43.4" class="level1">F12</text>
-        <text x="12.8" y="20.6" class="level2">@</text>
-        <text x="38.0" y="43.4" class="sym">÷</text>
+        <text x="17.8" y="45.0" class="level1 fn_xx">F12</text>
+        <text x="10.0" y="18.6" class="level2">@</text>
+        <text x="42.0" y="45.0" class="accent">×</text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">Y</text>
-        <text x="12.8" y="43.4" class="accent">û</text>
-        <text x="38.0" y="43.4" class="sym">´</text>
-        <text x="38.0" y="43.4" class="nav">*</text>
+        <text x="10.0" y="18.6" class="level2">Y</text>
+        <text x="42.0" y="45.0" class="accent">û</text>
+        <text x="42.0" y="18.6" class="sym">´</text>
+        <text x="27.0" y="31.0" class="nav">*</text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">U</text>
-        <text x="12.8" y="43.4" class="accent">ù</text>
-        <text x="38.0" y="43.4" class="sym">"</text>
-        <text x="38.0" y="43.4" class="nav">0</text>
+        <text x="10.0" y="18.6" class="level2">U</text>
+        <text x="42.0" y="45.0" class="accent">ù</text>
+        <text x="42.0" y="18.6" class="sym">"</text>
+        <text x="27.0" y="31.0" class="nav num">0</text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
-        <text x="12.8" y="20.6" class="level2">K</text>
-        <text x="38.0" y="43.4" class="sym">?</text>
-        <text x="38.0" y="43.4" class="nav">+</text>
+        <text x="10.0" y="18.6" class="level2">K</text>
+        <text x="42.0" y="18.6" class="sym">?</text>
+        <text x="27.0" y="31.0" class="nav">+</text>
       </g>
     </g>
 
@@ -494,10 +455,7 @@
     <g class="thb_6 specialKey">
       <g>
         <rect width="52" height="82" rx="5" ry="5"/>
-        <text x="26" y="22" style="font-size: 11px;">
-          <title>Espace insécable</title>
-          NBSP
-        </text>
+        <text x="26" y="22" style="font-size: 11px;">NBSP <title>Nonbreaking space (fr: Espace insécable)</title></text>
         <text x="26" y="45">Space</text>
       </g>
     </g>
