@@ -50,6 +50,14 @@ def raw_json(layout: "KeyboardLayout") -> Dict:
     for key_name in LAYER_KEYS:
         if key_name.startswith("-"):
             continue
+
+        primary_legend = None
+        for probe_layer in [Layer.BASE, Layer.SHIFT, Layer.ALTGR, Layer.ALTGR_SHIFT]:
+            legend_probe = layout.legends[probe_layer].get(key_name)
+            char_probe = layout.layers[probe_layer].get(key_name)
+            if legend_probe and _should_export_legend(legend_probe, char_probe):
+                primary_legend = legend_probe
+                break
         chars = list("")
         legends = ["", "", "", ""]
         for idx, layer in enumerate(
@@ -112,12 +120,18 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
     ET.register_namespace("", svg_ns)
     ns = {"": svg_ns}
 
-    def set_key_label(key: Optional[ET.Element], lvl: int, char: str) -> None:
+    def set_key_label(
+        key: Optional[ET.Element],
+        lvl: int,
+        char: str,
+        text_override: Optional[str] = None,
+    ) -> None:
         if not key:
             return
+        text_value = char if text_override is None else text_override
         for label in key.findall(f'g/text[@class="level{lvl}"]', ns):
             if char not in layout.dead_keys:
-                label.text = char
+                label.text = text_value
             else:  # only show last char for deadkeys
                 if char == ODK_ID:
                     label.text = "★"
@@ -146,6 +160,14 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
         if key_name.startswith("-"):
             continue
 
+        primary_legend = None
+        for probe_layer in [Layer.BASE, Layer.SHIFT, Layer.ALTGR, Layer.ALTGR_SHIFT]:
+            legend_probe = layout.legends[probe_layer].get(key_name)
+            char_probe = layout.layers[probe_layer].get(key_name)
+            if legend_probe and _should_export_legend(legend_probe, char_probe):
+                primary_legend = legend_probe
+                break
+
         level = 0
         for i in [
             Layer.BASE,
@@ -156,6 +178,8 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
             Layer.ODK_SHIFT,
         ]:
             level += 1
+            if primary_legend and level > 4:
+                continue
             if key_name not in layout.layers[i]:
                 continue
             if level == 1 and same_symbol(key_name, Layer.BASE, Layer.SHIFT):
@@ -166,6 +190,14 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
                 continue
 
             key = svg.find(f".//g[@id=\"{SCAN_CODES['web'][key_name]}\"]", ns)
-            set_key_label(key, level, layout.layers[i][key_name])
+            legend = layout.legends[i].get(key_name)
+            char = layout.layers[i][key_name]
+            text_override = None
+            if level <= 4:
+                if legend and _should_export_legend(legend, char):
+                    text_override = legend
+            elif primary_legend:
+                text_override = ""  # hide legend on dk levels to avoid overlap
+            set_key_label(key, level, char, text_override)
 
     return svg
