@@ -1,0 +1,72 @@
+name        = "Ergo-L-RDE"
+name8       = "ergolrde"
+locale      = "fr"
+variant     = "ergol"
+description = "French (Ergo-L RDE ANSI)"
+author      = "NuclearSquid & rdeneau"
+url         = "https://github.com/Nuclear-Squid/ergol"
+geometry    = "ANSI"
+version     = "1.0.0"
+
+# Légende des touches spéciales :
+# lmet = Touche Windows (Gauche)
+# lalt = Touche Alt (Gauche)
+# ralt = Touche AltGr (Droite)
+# ***  = 1e touche morte 1dk (Couche Accents)
+# &&&  = 2e touche morte 2dk (Couche NavNum)
+# ent  = Touche Entrée
+# spc  = Touche Espace
+# menu = Touche Menu (Clic droit / Propriétés)
+# lctl / rctl = Touches Control (Gauche / Droite)
+
+# Couche de base, intégrant la 1dk
+#                +-----+
+# shift -------> | ? ¿ | <----- 1dk, shift+key
+# base --------> | / ÷ | <----- 1dk, key
+#                +-----+
+base = '''
+┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓
+│ esc │ $   │ '   │ "   │ €   │ %   │ |   │ &   │ *   │ #   │ @   │ ins │     ┃          ┃
+│     │ f2  │ f3  │ f4  │ f5  │ f6  │ f8  │ f9  │ f10 │ f11 │ f12 │     │     ┃ ⌫        ┃
+┢━━━━━┷━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┺━━┯━━━━━━━┩
+┃ tab    ┃ Q   │ C   │ O   │ P   │ W   │ J   │ M   │ D   │ !   │ Y   │ del │     │       │
+┃        ┃   â │   ç │   œ │   ô │   § │   ↩ │   µ │   • │***  │   û │     │     │       │
+┣━━━━━━━━┻┱────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┲━━━━┷━━━━━━━┪
+┃ caps    ┃ A   │ S   │ E   │ N   │ F   │ L   │ R   │ T   │ I   │ U   │ bspc┃            ┃
+┃         ┃   à │   é │   è │   ê │   ≠ │   ↔ │   → │   î │   ï │   ù │     ┃ ⏎          ┃
+┣━━━━━━━━━┻━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┲━━┻━━━━━━━━━━━━┫
+┃ lsft       ┃ Z   │ X   │ ?   │ V   │ B   │ :   │ H   │ G   │ ;   │ K   ┃ ent           ┃
+┃            ┃   ñ │   ‑ │ -   │   – │   — │ .   │   … │  *µ │ ,   │     ┃ ⇧             ┃
+┣━━━━━━━┳━━━━┻━━┳━━┷━━━━┱┴─────┴─────┴─────┴─────┴─────┴─┲━━━┷━━━┳━┷━━━━━╋━━━━━━━┳━━━━━━━┫
+┃       ┃       ┃       ┃                                ┃       ┃       ┃       ┃       ┃
+┃ Ctrl  ┃ super ┃ Alt   ┃ ␣                              ┃ Alt   ┃ super ┃ menu  ┃ Ctrl  ┃
+┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛
+'''
+
+# Couche AltGr, intégrant des standard dead keys
+# https://github.com/OneDeadKey/kalamine/blob/main/docs/README.md#standard-dead-keys
+# Exemple : ajouter un accent grave : AltGr + N, Shift + I -> Ì
+altgr = '''
+┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┲━━━━━━━━━━┓
+│     │     │     │     │     │     │     │     │     │     │     │     │     ┃          ┃
+│     │   ¤ │   « │   » │     │   ° │   ≤ │   ≥ │   × │   ± │   ÷ │     │     ┃          ┃
+┢━━━━━┷━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┺━━┯━━━━━━━┩
+┃        ┃  *^ │   ≤ │   ≥ │  *¤ │   ‰ │  *˚ │     │   × │  *` │  *´ │     │     │       │
+┃        ┃   ^ │   < │   > │   $ │   % │   / │   & │   * │   ` │   ´ │     │     │       │
+┣━━━━━━━━┻┱────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┬────┴┲━━━━┷━━━━━━━┪
+┃         ┃  *ˇ │     │     │  *˙ │   ≠ │  */ │   ± │  *¯ │     │  *” │     ┃            ┃
+┃         ┃   { │   ( │   ) │   } │   = │   \ │   + │   - │   ' │   " │     ┃            ┃
+┣━━━━━━━━━┻━━┱──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┲━━┻━━━━━━━━━━━━┫
+┃            ┃  *~ │  *, │  *˛ │   – │     │     │   ¦ │  *¸ │   : │  *˘ ┃               ┃
+┃            ┃   ~ │   [ │   ] │   _ │   # │   ! │   | │   ; │   : │   ? ┃               ┃
+┣━━━━━━━┳━━━━┻━━┳━━┷━━━━┱┴─────┴─────┴─────┴─────┴─────┴─┲━━━┷━━━┳━┷━━━━━╋━━━━━━━┳━━━━━━━┫
+┃       ┃       ┃       ┃                                ┃       ┃       ┃       ┃       ┃
+┃ Ctrl  ┃ super ┃ Alt   ┃ ␣                              ┃ Alt   ┃ super ┃ menu  ┃ Ctrl  ┃
+┗━━━━━━━┻━━━━━━━┻━━━━━━━┹────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┻━━━━━━━┛
+'''
+
+# https://github.com/OneDeadKey/kalamine/blob/main/docs/README.md#space-bar
+[spacebar]
+shift       = "\u00a0"  # NO-BREAK SPACE
+altgr       = "\u0020"  # SPACE
+altgr_shift = "\u202f"  # NARROW NO-BREAK SPACE

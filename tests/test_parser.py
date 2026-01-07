@@ -83,3 +83,75 @@ def test_intl():  # 1dk + dead keys
     assert layout.layers[1]["lsgt"] == "Z"
     assert layout.layers[0]["ab01"] == "x"
     assert layout.layers[1]["ab01"] == "X"
+
+
+def test_ergol():
+    layout = load_layout("ergol")
+    assert layout.meta["locale"] == "fr"
+    assert layout.meta["geometry"] == "ERGO"
+    assert layout.has_altgr
+    assert layout.has_1dk
+
+    # Base layer
+    assert layout.layers[0]["ad01"] == "q"
+    assert layout.layers[1]["ad01"] == "Q"
+    assert layout.layers[0]["ad09"] == "**"
+    assert layout.layers[1]["ad09"] == "!"
+
+    # ODK layer (1dk)
+    assert layout.layers[2]["ad01"] == "â"
+    assert layout.layers[2]["ad09"] == "*¨"
+
+    # AltGr layer
+    assert layout.layers[4]["ad01"] == "^"
+    assert layout.layers[5]["ad01"] == "*^"
+    assert layout.layers[4]["ad02"] == "<"
+    assert layout.layers[5]["ad02"] == "≤"
+
+
+def test_ergol_rde_ansi():
+    layout = load_layout("ergol-rde-ansi")
+    assert layout.meta["locale"] == "fr"
+    assert layout.meta["geometry"] == "ANSI"
+    assert layout.has_altgr
+    assert layout.has_1dk
+
+    # Base layer
+    assert layout.layers[0]["ad03"] == "o"
+    assert layout.layers[1]["ad03"] == "O"
+    assert layout.layers[0]["ad04"] == "p"
+    assert layout.layers[1]["ad04"] == "P"
+
+    # ODK layer (1dk)
+    assert layout.layers[2]["ad03"] == "œ"
+    assert layout.layers[2]["ad04"] == "ô"
+
+    # AltGr layer
+    assert layout.layers[4]["ad03"] == ">"
+    assert layout.layers[5]["ad03"] == "≥"
+    assert layout.layers[4]["ad04"] == "$"
+    assert layout.layers[5]["ad04"] == "*¤"
+
+
+def test_ergol_rde_sofle():
+    layout = load_layout("ergol-rde-sofle")
+    assert layout.meta["locale"] == "fr"
+    assert layout.meta["geometry"] == "ERGO"
+    assert layout.has_altgr
+    assert layout.has_1dk
+
+    # Base layer
+    assert layout.layers[0]["ad01"] == "q"
+    assert layout.layers[1]["ad01"] == "Q"
+    assert layout.layers[0]["ad09"] == "**"
+    assert layout.layers[1]["ad09"] == "!"
+
+    # ODK layer (1dk)
+    assert layout.layers[2]["ad01"] == "â"
+    assert layout.layers[2]["ad09"] == "* "  # 1dk on itself
+
+    # AltGr layer
+    assert layout.layers[4]["ad01"] == "^"
+    assert layout.layers[5]["ad01"] == "*^"
+    assert layout.layers[4]["ad02"] == "<"
+    assert layout.layers[5]["ad02"] == "≤"
