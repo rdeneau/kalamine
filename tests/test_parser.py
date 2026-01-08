@@ -131,14 +131,20 @@ def test_ergolr():
     assert layout.has_1dk
 
     # Base layer
+    assert layout.layers[0]["ae01"] == "f2"
+    assert layout.layers[0]["ae10"] == "f12"
     assert layout.layers[0]["ad01"] == "q"
     assert layout.layers[1]["ad01"] == "Q"
-    assert layout.layers[0]["ad09"] == "**"
+    assert layout.layers[0]["ad09"] == "**" # dead key
     assert layout.layers[1]["ad09"] == "!"
 
     # ODK layer (1dk)
+    assert layout.layers[2]["ae01"] == "¤"
     assert layout.layers[2]["ad01"] == "â"
-    assert layout.layers[2]["ad09"] == "* "  # 1dk on itself
+    assert layout.layers[2]["ae02"] == "«"
+    assert layout.layers[3]["ae02"] == "❝"
+    assert layout.layers[3]["ae02"] == "❝"
+    assert layout.layers[2]["ae10"] == "÷"
 
     # AltGr layer
     assert layout.layers[4]["ad01"] == "^"
