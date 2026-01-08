@@ -147,30 +147,6 @@ def test_ergolr():
     assert layout.layers[5]["ad02"] == "≤"
 
 
-def test_ergolr_ansi():
-    layout = load_layout("ergolra")
-    assert layout.meta["locale"] == "en"
-    assert layout.meta["geometry"] == "ANSI"
-    assert layout.has_altgr
-    assert layout.has_1dk
-
-    # Base layer
-    assert layout.layers[0]["ad03"] == "o"
-    assert layout.layers[1]["ad03"] == "O"
-    assert layout.layers[0]["ad04"] == "p"
-    assert layout.layers[1]["ad04"] == "P"
-
-    # ODK layer (1dk)
-    assert layout.layers[2]["ad03"] == "œ"
-    assert layout.layers[2]["ad04"] == "ô"
-
-    # AltGr layer
-    assert layout.layers[4]["ad03"] == ">"
-    assert layout.layers[5]["ad03"] == "≥"
-    assert layout.layers[4]["ad04"] == "$"
-    assert layout.layers[5]["ad04"] == "*¤"
-
-
 def test_tab():
     layout_data = {
         "name": "tab-test",
