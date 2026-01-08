@@ -291,6 +291,7 @@ class KeyboardLayout:
                 base_key = ("*" if base[i - 1] == "*" else "") + base[i]
                 shift_key = ("*" if shift[i - 1] == "*" else "") + shift[i]
 
+                # Extract labels for the entire cell
                 base_label = self._extract_cell_label(base, i)
                 if base_label:
                     self.legends[layer_number][key] = base_label
@@ -312,18 +313,89 @@ class KeyboardLayout:
                         # shift_key = upper_key(base_key, blank_if_obvious=False)
 
                 # Special keys (esc, f1..f12, ins, del, bspc) shouldn't produce text
-                def is_special_key(label: str) -> bool:
+                # Instead, they should be stored by their key name
+                def extract_special_key(label: str) -> Optional[str]:
+                    """Extract special key name from label, or None if not a special key."""
                     if not label:
-                        return False
+                        return None
                     label_lower = label.lower().strip()
-                    return label_lower in ("esc", "ins", "del", "bspc") or (
-                        label_lower.startswith("f") and label_lower[1:].isdigit()
-                    )
+                    
+                    # Check explicit special keys at the start
+                    for special in ("esc", "ins", "del", "bspc"):
+                        if label_lower.startswith(special):
+                            # Check if it's the whole label or followed by non-letter
+                            if len(label_lower) == len(special) or not label_lower[len(special)].isalpha():
+                                return special
+                    
+                    # Check for function keys f1-f12 at the start
+                    if label_lower.startswith("f"):
+                        # Extract the numeric part
+                        i = 1
+                        while i < len(label_lower) and label_lower[i].isdigit():
+                            i += 1
+                        
+                        if i > 1:  # Found at least one digit after 'f'
+                            try:
+                                fn_num = int(label_lower[1:i])
+                                # Valid function keys are f1 through f12
+                                if 1 <= fn_num <= 12:
+                                    return label_lower[:i]  # Return the function key name (e.g., "f2", "f12")
+                            except ValueError:
+                                pass
+                    
+                    return None
+                
+                def split_label_for_layers(label: str, is_base_layer: bool) -> tuple[Optional[str], Optional[str]]:
+                    """Split a label into (base_value, odk_value) based on position.
+                    
+                    For BASE layer (is_base_layer=True), we use the left part.
+                    For ODK layer (is_base_layer=False), we use the right part.
+                    
+                    If label starts with a special key (e.g., "f12÷"), split it:
+                    - base_value: "f12" (the special key)
+                    - odk_value: "÷" (the remaining character)
+                    
+                    If label has spaces (e.g., "f2 ¤"), split on space:
+                    - base_value: "f2"
+                    - odk_value: "¤"
+                    """
+                    if not label:
+                        return (None, None)
+                    
+                    # Check if it starts with a special key
+                    special = extract_special_key(label)
+                    if special:
+                        # Split: special key + remainder
+                        remainder = label[len(special):].strip()
+                        return (special, remainder if remainder else None)
+                    
+                    # Otherwise split on space if present
+                    parts = label.strip().split(None, 1)  # Split on first whitespace
+                    if len(parts) == 2:
+                        return (parts[0], parts[1])
+                    elif len(parts) == 1:
+                        return (parts[0], None)
+                    
+                    return (None, None)
 
-                if is_special_key(base_label):
-                    base_key = " "
-                if is_special_key(shift_label):
-                    shift_key = " "
+                # For BASE layer, use left part of label; for ODK, use right part
+                is_base_layer = (layer_number == Layer.BASE)
+                base_split, odk_split = split_label_for_layers(base_label, is_base_layer)
+                shift_split, shift_odk_split = split_label_for_layers(shift_label, is_base_layer)
+                
+                # Determine which split to use based on the layer
+                if is_base_layer:
+                    # Use the left (base) part
+                    if base_split and extract_special_key(base_split):
+                        base_key = base_split
+                    if shift_split and extract_special_key(shift_split):
+                        shift_key = shift_split
+                else:  # ODK or ALTGR layer
+                    # Use the right (odk) part if it exists
+                    if odk_split:
+                        base_key = odk_split
+                    if shift_odk_split:
+                        shift_key = shift_odk_split
 
                 if base_key.endswith("⇥"):
                     base_key = base_key[:-1] + "\t"
@@ -360,6 +432,47 @@ class KeyboardLayout:
         max_index = len(line) - 1
         while right < max_index and not cls._is_cell_border(line[right + 1]):
             right += 1
+        return "".join(line[left : right + 1]).strip()
+
+    @classmethod
+    def _extract_local_label(cls, line: List[str], index: int) -> str:
+        """Extract label immediately around the index position.
+        
+        This extracts a token (word) starting at or near the index position,
+        useful for detecting special keys at specific positions within a cell.
+        The key insight: if we're in the MIDDLE of a token (not at its start),
+        we look forward for the NEXT token instead.
+        
+        For example, in 'f2 ¤':
+        - at position of 'f' (start of token) -> extracts 'f2'
+        - at position of '2' (middle of token 'f2') -> extracts '¤' (next token)
+        - at position of ' ' (space) -> extracts '¤' (next token)
+        - at position of '¤' -> extracts '¤'
+        
+        In 'f12÷':
+        - at position of 'f' (start) -> extracts 'f12÷' (no space, gets whole thing... but we handle this differently)
+        
+        Actually, better approach: extract from current position forward only, not backward.
+        """
+        if index >= len(line):
+            return ""
+        
+        # Start from the current position
+        left = index
+        
+        # Skip any leading spaces or borders from current position
+        while left < len(line) and (line[left] in (' ', '\t') or cls._is_cell_border(line[left])):
+            left += 1
+        
+        if left >= len(line):
+            return ""
+        
+        # Now extract the token starting from left
+        right = left
+        max_index = len(line) - 1
+        while right < max_index and not cls._is_cell_border(line[right + 1]) and line[right + 1] not in (' ', '\t'):
+            right += 1
+        
         return "".join(line[left : right + 1]).strip()
 
     ###
