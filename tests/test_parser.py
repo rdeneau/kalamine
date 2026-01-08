@@ -143,7 +143,8 @@ def test_ergolr():
     assert layout.layers[2]["ad01"] == "â"
     assert layout.layers[2]["ae02"] == "«"
     assert layout.layers[3]["ae02"] == "❝"
-    assert layout.layers[3]["ae02"] == "❝"
+    assert layout.layers[2]["ae07"] == "‹"
+    assert layout.layers[3]["ae07"] == "≤"
     assert layout.layers[2]["ae10"] == "÷"
 
     # AltGr layer

@@ -63,7 +63,7 @@
 
     #sym rect { fill: #99f; }
     #nav rect { fill: #e83; }
-    .deadKey { fill: red; font-size: 14px; }
+    .deadKey { fill: red; font-size: 16px; }
     .sym { fill: #44f; }
     .nav { fill: #e83; text-align: center; }
 
@@ -136,7 +136,7 @@
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="12.8" y="45.0" class="level1 fn_x">F3</text>
         <text x="10.0" y="18.6" class="level2">'</text>
-        <text x="42.0" y="45.0" class="accent">« <title>Left guillemet</title></text>
+        <text x="42.0" y="45.0" class="accent">’ <title>Punctuation apostrophe (single right quotation mark)</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -166,7 +166,8 @@
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="12.8" y="45.0" class="level1 fn_x">F4</text>
         <text x="10.0" y="18.6" class="level2">"</text>
-        <text x="42.0" y="45.0" class="accent">» <title>Right guillemet</title></text>
+        <text x="42.0" y="45.0" class="accent">« <title>Left guillemet</title></text>
+        <text x="42.0" y="18.6" class="accent">❝ <title>heavy double quote</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -197,7 +198,8 @@
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="12.8" y="45.0" class="level1 fn_x">F5</text>
         <text x="10.0" y="18.6" class="level2">€</text>
-        <text x="42.0" y="45.0" class="accent">’ <title>Punctuation apostrophe (single right quotation mark)</title></text>
+        <text x="42.0" y="45.0" class="accent">» <title>Right guillemet</title></text>
+        <text x="42.0" y="18.6" class="accent">❞ <title>heavy double quote</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -227,21 +229,22 @@
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="12.8" y="45.0" class="level1 fn_x">F6</text>
         <text x="10.0" y="18.6" class="level2">%</text>
-        <text x="42.0" y="45.0" class="accent">°</text>
+        <text x="42.0" y="18.6" class="accent">‰ <title>per mille</title></text>
+        <text x="42.0" y="45.0" class="accent">° <title>degree</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="10.0" y="18.6" class="level2">W</text>
         <text x="42.0" y="45.0" class="accent">§ <title>Paragraph sign (section sign)</title></text>
         <text x="42.0" y="18.6" class="sym">%</text>
-        <text x="27.0" y="31.0" class="nav">⇞</text>
+        <text x="27.0" y="31.0" class="nav">⇞ <title>page up</title></text>
       </g>
       <g transform="translate(0 60)">
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="10.0" y="18.6" class="level2">F</text>
-        <text x="42.0" y="45.0" class="accent">≠</text>
+        <text x="42.0" y="45.0" class="accent">≠ <title>not equal</title></text>
         <text x="42.0" y="18.6" class="sym">=</text>
-        <text x="27.0" y="31.0" class="nav">⇟</text>
+        <text x="27.0" y="31.0" class="nav">⇟ <title>page down</title></text>
       </g>
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -291,6 +294,7 @@
         <text x="12.8" y="45.0" class="level1 fn_x">F8</text>
         <text x="10.0" y="18.6" class="level2">|</text>
         <text x="42.0" y="45.0" class="accent">÷</text>
+        <text x="42.0" y="18.6" class="accent">∅ <title>empty set</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -322,6 +326,7 @@
         <text x="12.8" y="45.0" class="level1 fn_x">F9</text>
         <text x="10.0" y="18.6" class="level2">&amp;</text>
         <text x="42.0" y="45.0" class="accent">≤</text>
+        <text x="42.0" y="18.6" class="accent">‹ <title>angle quote</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -352,6 +357,7 @@
         <text x="17.8" y="45.0" class="level1 fn_xx">F10</text>
         <text x="10.0" y="18.6" class="level2">*</text>
         <text x="42.0" y="45.0" class="accent">≥</text>
+        <text x="42.0" y="18.6" class="accent">› <title>angle quote</title></text>
       </g>
       <g transform="translate(0 0)">
         <rect width="52" height="52" rx="5" ry="5"/>
@@ -370,7 +376,7 @@
       <g transform="translate(0 120)">
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="10.0" y="18.6" class="level2">G</text>
-        <text x="42.0" y="45.0" class="accent">α <title>Dead key for Greek letters</title></text>
+        <text x="10.0" y="45.0" class="deadKey">α <title>dead key for Greek letters</title></text>
         <text x="42.0" y="18.6" class="sym">:</text>
         <text x="27.0" y="31.0" class="nav num">2</text>
       </g>
@@ -381,6 +387,7 @@
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="17.8" y="45.0" class="level1 fn_xx">F11</text>
         <text x="10.0" y="18.6" class="level2">#</text>
+        <text x="42.0" y="18.6" class="accent">♯ <title>sharp (music sign)</title></text>
         <text x="42.0" y="45.0" class="accent">±</text>
       </g>
       <g transform="translate(0 0)">
@@ -411,6 +418,7 @@
         <rect width="52" height="52" rx="5" ry="5"/>
         <text x="17.8" y="45.0" class="level1 fn_xx">F12</text>
         <text x="10.0" y="18.6" class="level2">@</text>
+        <text x="42.0" y="18.6" class="accent">≈ <title>almost equal</title></text>
         <text x="42.0" y="45.0" class="accent">×</text>
       </g>
       <g transform="translate(0 0)">
