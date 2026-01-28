@@ -314,11 +314,29 @@ class KeyboardLayout:
 
                 # Special keys (esc, f1..f12, ins, del, bspc) shouldn't produce text
                 # Instead, they should be stored by their key name
+                circled_fn = {
+                    "①": "f1",
+                    "②": "f2",
+                    "③": "f3",
+                    "④": "f4",
+                    "⑤": "f5",
+                    "⑥": "f6",
+                    "⑦": "f7",
+                    "⑧": "f8",
+                    "⑨": "f9",
+                    "⑩": "f10",
+                    "⑪": "f11",
+                    "⑫": "f12",
+                }
+
                 def extract_special_key(label: str) -> Optional[str]:
                     """Extract special key name from label, or None if not a special key."""
                     if not label:
                         return None
                     label_lower = label.lower().strip()
+
+                    if label_lower and label_lower[0] in circled_fn:
+                        return circled_fn[label_lower[0]]
                     
                     # Check explicit special keys at the start
                     for special in ("esc", "ins", "del", "bspc"):

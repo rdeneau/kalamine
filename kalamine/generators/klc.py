@@ -102,6 +102,8 @@ def _assign_vks(layout: "KeyboardLayout") -> Dict[str, str]:
                 symbol = layer[key_name]
                 if symbol in layout.dead_keys:
                     symbol = layout.dead_keys[symbol][" "]
+                elif len(symbol) != 1:
+                    symbol = "-1"
                 symbols.append(symbol)
             else:
                 symbols.append("-1")
@@ -170,6 +172,21 @@ def klc_keymap(layout: "KeyboardLayout") -> List[str]:
         description = "//"
         is_alpha = False
 
+        f_keys = {
+            "f1",
+            "f2",
+            "f3",
+            "f4",
+            "f5",
+            "f6",
+            "f7",
+            "f8",
+            "f9",
+            "f10",
+            "f11",
+            "f12",
+        }
+
         for i in [Layer.BASE, Layer.SHIFT, Layer.ALTGR, Layer.ALTGR_SHIFT]:
             layer = layout.layers[i]
 
@@ -182,6 +199,15 @@ def klc_keymap(layout: "KeyboardLayout") -> List[str]:
                 else:
                     if i == Layer.BASE:
                         is_alpha = symbol.upper() != symbol
+                    if symbol.lower() in f_keys:
+                        desc = symbol
+                        symbols.append("-1")
+                        description += " " + desc
+                        continue
+                    if len(symbol) != 1:
+                        symbols.append("-1")
+                        description += " " + desc
+                        continue
                     if symbol not in supported_symbols:
                         symbol = hex_ord(symbol)
                 symbols.append(symbol)
@@ -266,6 +292,9 @@ def klc_deadkeys(layout: "KeyboardLayout") -> List[str]:
 
             if base in layout.dead_keys:
                 base = layout.dead_keys[base][" "]
+
+            if len(base) != 1:
+                continue
 
             if alt in layout.dead_keys:
                 alt = layout.dead_keys[alt][" "]

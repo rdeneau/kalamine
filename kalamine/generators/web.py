@@ -114,6 +114,20 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
     svg_ns = "http://www.w3.org/2000/svg"
     ET.register_namespace("", svg_ns)
     ns = {"": svg_ns}
+    fn_circled = {
+        "①": 1,
+        "②": 2,
+        "③": 3,
+        "④": 4,
+        "⑤": 5,
+        "⑥": 6,
+        "⑦": 7,
+        "⑧": 8,
+        "⑨": 9,
+        "⑩": 10,
+        "⑪": 11,
+        "⑫": 12,
+    }
 
     def set_key_label(
         key: Optional[ET.Element],
@@ -187,6 +201,18 @@ def svg(layout: "KeyboardLayout", geometry: Optional[str] = None) -> ET.ElementT
             key = svg.find(f'.//g[@id="{SCAN_CODES["web"][key_name]}"]', ns)
             legend = layout.legends[i].get(key_name)
             char = layout.layers[i][key_name]
+            fn_num = None
+            if legend:
+                if legend[0] in fn_circled:
+                    fn_num = fn_circled[legend[0]]
+                elif legend.lower().startswith("f") and legend[1:].isdigit():
+                    fn_num = int(legend[1:])
+            if fn_num is None and char.lower().startswith("f") and char[1:].isdigit():
+                fn_num = int(char[1:])
+            if fn_num and 1 <= fn_num <= 12:
+                fn_label = f"F{fn_num}"
+                char = fn_label
+                legend = fn_label
             text_override = None
             if level <= 4:
                 if legend and _should_export_legend(legend, char):
